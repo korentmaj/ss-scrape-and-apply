@@ -7,7 +7,7 @@
   "top_n": 5,
   "headless": false,
   "wait_for_login_seconds": 240,
-  "output_mode": "notion",
+  "output_mode": "csv",
   "csv_path": "jobs.csv",
   "seen_jobs_path": "seen_jobs.json",
   "max_retries": 2,

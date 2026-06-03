@@ -1,0 +1,20 @@
+Pozdravljen!
+
+Za uporabo potrebuješ samo 2 koraka:
+
+  1) Dvoklikni  1-Namesti.bat   (in klikaj Da / Vseeno zaženi)
+  2) Dvoklikni  2-Zazeni.bat    (odpre se stran v brskalniku)
+
+Naložiš svoj CV, klikneš zeleni gumb "Testni zagon (varno)",
+se prijaviš v Studentski servis ko se odpre novo okno -- in to je to.
+
+Ne skrbi, "Testni zagon" je varen in nič ne odda. Šele ko klikneš
+"Pravi zagon", se prijave dejansko oddajo.
+
+Pomembno: črno okno, ki se odpre, naj ostane odprto, dokler uporabljaš
+program. Če ga zapreš, se program ustavi.
+
+Podrobna in prijazna navodila po korakih najdeš v datoteki NAVODILA.md
+(odpri jo z brskalnikom ali urejevalnikom besedila).
+
+Lep pozdrav in veliko sreče pri iskanju dela!

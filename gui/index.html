@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studentski servis – Prijave</title>
+<style>
+  :root {
+    --bg: #0f1720;
+    --panel: #16212e;
+    --panel-2: #1d2c3c;
+    --line: #2a3b4d;
+    --text: #e7eef5;
+    --muted: #93a4b5;
+    --accent: #3b82f6;
+    --green: #22c55e;
+    --green-d: #16a34a;
+    --red: #ef4444;
+    --red-d: #dc2626;
+    --amber: #f59e0b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    padding: 18px 22px;
+    background: linear-gradient(180deg, #182636, #121c28);
+    border-bottom: 1px solid var(--line);
+  }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 22px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 880px) { .wrap { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .card h2 { margin: 0 0 12px; font-size: 15px; letter-spacing: .2px; }
+  .card .hint { color: var(--muted); font-size: 12.5px; margin: -6px 0 14px; }
+  label { display: block; font-size: 13px; margin: 12px 0 5px; color: #cdd9e5; }
+  input[type=text], input[type=number], input[type=password], textarea, select {
+    width: 100%;
+    background: #0e1620;
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font: inherit;
+    font-size: 13.5px;
+  }
+  textarea { resize: vertical; min-height: 96px; }
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+  .btn {
+    border: 0; border-radius: 9px; padding: 12px 16px;
+    font: inherit; font-weight: 600; font-size: 14px; cursor: pointer;
+    color: #fff; background: var(--panel-2); transition: filter .12s ease;
+  }
+  .btn:hover { filter: brightness(1.12); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+  .btn.green { background: var(--green-d); }
+  .btn.blue { background: var(--accent); }
+  .btn.red { background: var(--red-d); }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--text); font-weight: 500; }
+  .btn.big { width: 100%; padding: 15px; font-size: 15px; }
+  .runbtns { display: grid; gap: 10px; }
+  .status { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 4px; }
+  .dot { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
+  .dot b { color: var(--text); font-weight: 600; }
+  .led { width: 10px; height: 10px; border-radius: 50%; background: #51606f; }
+  .led.ok { background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,.6); }
+  .led.bad { background: var(--red); }
+  .led.warn { background: var(--amber); }
+  .drop {
+    border: 1.5px dashed var(--line); border-radius: 10px; padding: 16px;
+    text-align: center; color: var(--muted); font-size: 13px; cursor: pointer;
+    background: #0e1620;
+  }
+  .drop.hot { border-color: var(--accent); color: var(--text); }
+  details { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 6px; }
+  details summary { cursor: pointer; font-size: 13px; color: var(--muted); padding: 6px 0; }
+  details[open] summary { color: var(--text); }
+  .console {
+    background: #0a1118; border: 1px solid var(--line); border-radius: 10px;
+    height: 360px; overflow-y: auto; padding: 12px;
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 12.3px; white-space: pre-wrap; word-break: break-word;
+  }
+  .console .l { color: #c6d3e0; }
+  .console .info { color: #7ec0ff; }
+  .console .err { color: #ff9a9a; }
+  .console .muted { color: var(--muted); }
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+  .summary .box { background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px; padding: 10px; text-align: center; }
+  .summary .box b { display: block; font-size: 22px; }
+  .summary .box span { font-size: 11px; color: var(--muted); }
+  .toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: #0b1622; border: 1px solid var(--line); color: var(--text);
+    padding: 11px 18px; border-radius: 10px; font-size: 13.5px; opacity: 0;
+    pointer-events: none; transition: opacity .2s ease; z-index: 50;
+  }
+  .toast.show { opacity: 1; }
+  .badge { font-size: 11px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+  .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  a { color: #8cc0ff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎓 Studentski servis – samodejne prijave</h1>
+  <p>Nadzorna plošča. Naloži CV, klikni <b>Testni zagon</b>, prijavi se v Studentski servis ko se odpre okno – in to je to.</p>
+</header>
+
+<div class="wrap">
+  <!-- LEFT: settings -->
+  <div class="card">
+    <h2>1) Nastavitve</h2>
+    <div class="hint">Vse je že vnaprej izpolnjeno. Vsaj naloži svoj CV in po želji uredi sporočilo.</div>
+
+    <div class="status" id="status">
+      <span class="dot"><span class="led" id="led-install"></span> <b>Namestitev</b></span>
+      <span class="dot"><span class="led" id="led-cv"></span> <b>CV</b></span>
+      <span class="dot"><span class="led" id="led-mode"></span> <span id="mode-label">shranjevanje</span></span>
+    </div>
+
+    <label>Tvoj CV (datoteka PDF)</label>
+    <div class="drop" id="drop">
+      <div id="drop-text">Klikni za izbiro CV-ja ali ga povleci sem (PDF).</div>
+      <input type="file" id="cv" accept="application/pdf,.pdf" hidden />
+    </div>
+
+    <label>Spremno sporočilo (besedilo prijave)</label>
+    <textarea id="application_message" placeholder="Spoštovani, ..."></textarea>
+
+    <div class="row">
+      <div>
+        <label>Koliko najnovejših oglasov pregledam</label>
+        <input type="number" id="top_n" min="1" max="20" />
+      </div>
+      <div>
+        <label>Kam shranim rezultate</label>
+        <select id="output_mode">
+          <option value="csv">Lokalno (datoteka jobs.csv) – priporočeno</option>
+          <option value="notion">Notion baza</option>
+          <option value="both">Oboje</option>
+        </select>
+      </div>
+    </div>
+
+    <details>
+      <summary>Napredno: e-pošta (Gmail) – neobvezno</summary>
+      <div class="note">Potrebno samo, če želiš, da program sam pošlje e-pošto delodajalcem, ki sprejemajo prijave po e-pošti. Za osnovno uporabo to lahko pustiš prazno.</div>
+      <label>Predmet e-pošte</label>
+      <input type="text" id="email_subject" />
+      <label>Besedilo e-pošte</label>
+      <textarea id="email_body"></textarea>
+      <div class="row">
+        <div><label>Gmail naslov (SMTP_USER)</label><input type="text" id="SMTP_USER" placeholder="ime@gmail.com" /></div>
+        <div><label>Pošlji od (MAIL_FROM)</label><input type="text" id="MAIL_FROM" placeholder="ime@gmail.com" /></div>
+      </div>
+      <label>Gmail geslo za aplikacije (App Password) <span class="badge" id="smtp-pass-set">ni nastavljeno</span></label>
+      <input type="password" id="SMTP_PASS" placeholder="pusti prazno, da ostane nespremenjeno" />
+      <div class="note">Navodila za "App Password": Google račun → Varnost → 2-stopenjska prijava → Gesla za aplikacije.</div>
+    </details>
+
+    <details>
+      <summary>Napredno: Notion – neobvezno</summary>
+      <div class="note">Samo če si zgoraj izbral "Notion". Potrebuješ Notion integracijski žeton in ID baze.</div>
+      <label>Notion žeton (NOTION_TOKEN) <span class="badge" id="notion-token-set">ni nastavljeno</span></label>
+      <input type="password" id="NOTION_TOKEN" placeholder="pusti prazno, da ostane nespremenjeno" />
+      <label>ID Notion baze (NOTION_DATABASE_ID)</label>
+      <input type="text" id="NOTION_DATABASE_ID" />
+    </details>
+
+    <div style="margin-top:16px">
+      <button class="btn blue big" id="save">💾 Shrani nastavitve</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: run + log -->
+  <div class="card">
+    <h2>2) Zagon</h2>
+    <div class="hint">Najprej naredi <b>Testni zagon</b> (nič ne odda). Ko si zadovoljen, klikni Pravi zagon.</div>
+
+    <div class="runbtns">
+      <button class="btn green big" id="run-test">▶ Testni zagon (varno – brez oddaje)</button>
+      <button class="btn red big" id="run-live">🚀 Pravi zagon (oddaja prijav)</button>
+      <div class="row">
+        <button class="btn ghost" id="run-selftest">🔌 Preveri povezavo</button>
+        <button class="btn ghost" id="stop" disabled>⏹ Ustavi</button>
+      </div>
+    </div>
+
+    <div class="summary" id="summary" style="display:none">
+      <div class="box"><b id="s-processed">0</b><span>obdelanih</span></div>
+      <div class="box"><b id="s-applied">0</b><span>oddanih</span></div>
+      <div class="box"><b id="s-email">0</b><span>e-pošta</span></div>
+      <div class="box"><b id="s-failed">0</b><span>napak</span></div>
+    </div>
+
+    <label style="margin-top:16px">Dnevnik v živo</label>
+    <div class="console" id="console"><span class="muted">Dnevnik se pokaže tukaj, ko zaženeš...</span></div>
+    <div class="note">Ko se odpre brskalnik za prijave, se <b>prijavi v Studentski servis</b> v tistem oknu (samo prvič – prijava se zapomni).</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const consoleEl = $('console');
+let firstLog = true;
+let running = false;
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function led(el, state) { // 'ok' | 'bad' | 'warn' | ''
+  el.className = 'led' + (state ? ' ' + state : '');
+}
+
+function appendLog(entry) {
+  if (firstLog) { consoleEl.innerHTML = ''; firstLog = false; }
+  const div = document.createElement('div');
+  let cls = 'l';
+  if (entry.level === 'info') cls = 'info';
+  else if (entry.level === 'err') cls = 'err';
+  div.className = cls;
+  div.textContent = entry.line;
+  consoleEl.appendChild(div);
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+
+function setRunning(isRunning) {
+  running = isRunning;
+  $('run-test').disabled = isRunning;
+  $('run-live').disabled = isRunning;
+  $('run-selftest').disabled = isRunning;
+  $('stop').disabled = !isRunning;
+}
+
+function applyState(s) {
+  led($('led-install'), s.ready && s.ready.nodeModules ? 'ok' : 'bad');
+  led($('led-cv'), s.cvPresent ? 'ok' : 'warn');
+  led($('led-mode'), 'ok');
+
+  const c = s.config || {};
+  if (c.application_message != null) $('application_message').value = c.application_message;
+  if (c.email_subject != null) $('email_subject').value = c.email_subject;
+  if (c.email_body != null) $('email_body').value = c.email_body;
+  $('top_n').value = c.top_n != null ? c.top_n : 5;
+  $('output_mode').value = c.output_mode || 'csv';
+  $('mode-label').textContent = ($('output_mode').value === 'csv') ? 'shranjevanje v jobs.csv' : 'shranjevanje: ' + $('output_mode').value;
+
+  const e = s.env || {};
+  if (e.SMTP_USER != null) $('SMTP_USER').value = e.SMTP_USER;
+  if (e.MAIL_FROM != null) $('MAIL_FROM').value = e.MAIL_FROM;
+  if (e.NOTION_DATABASE_ID != null) $('NOTION_DATABASE_ID').value = e.NOTION_DATABASE_ID;
+  $('smtp-pass-set').textContent = e.SMTP_PASS__set ? 'nastavljeno ✓' : 'ni nastavljeno';
+  $('notion-token-set').textContent = e.NOTION_TOKEN__set ? 'nastavljeno ✓' : 'ni nastavljeno';
+
+  $('drop-text').textContent = s.cvPresent
+    ? 'CV je naložen ✓  (klikni za zamenjavo)'
+    : 'Klikni za izbiro CV-ja ali ga povleci sem (PDF).';
+
+  if (s.lastSummary) renderSummary(s.lastSummary);
+  setRunning(Boolean(s.running));
+}
+
+function renderSummary(sum) {
+  if (!sum) return;
+  $('summary').style.display = 'grid';
+  $('s-processed').textContent = sum.processed_jobs ?? 0;
+  $('s-applied').textContent = sum.applied_count ?? 0;
+  $('s-email').textContent = sum.email_count ?? 0;
+  $('s-failed').textContent = sum.failed_count ?? 0;
+}
+
+function collectSettings() {
+  return {
+    config: {
+      application_message: $('application_message').value,
+      email_subject: $('email_subject').value,
+      email_body: $('email_body').value,
+      top_n: $('top_n').value,
+      output_mode: $('output_mode').value,
+    },
+    env: {
+      SMTP_USER: $('SMTP_USER').value,
+      MAIL_FROM: $('MAIL_FROM').value,
+      SMTP_PASS: $('SMTP_PASS').value, // empty = keep existing
+      NOTION_DATABASE_ID: $('NOTION_DATABASE_ID').value,
+      NOTION_TOKEN: $('NOTION_TOKEN').value, // empty = keep existing
+    },
+  };
+}
+
+async function saveSettings(silent) {
+  const res = await fetch('/api/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(collectSettings()),
+  });
+  const s = await res.json();
+  applyState(s);
+  $('SMTP_PASS').value = '';
+  $('NOTION_TOKEN').value = '';
+  if (!silent) toast('Nastavitve shranjene ✓');
+}
+
+async function loadState() {
+  const s = await fetch('/api/state').then((r) => r.json());
+  applyState(s);
+}
+
+async function startRun(mode) {
+  await saveSettings(true);
+  const res = await fetch('/api/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mode }),
+  });
+  const r = await res.json();
+  if (!r.ok) { toast(r.error || 'Zagon ni uspel.'); return; }
+  setRunning(true);
+}
+
+// --- CV upload ---
+function handleCv(file) {
+  if (!file) return;
+  if (file.size > 20 * 1024 * 1024) { toast('Datoteka prevelika (max 20 MB).'); return; }
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const res = await fetch('/api/cv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: file.name, dataBase64: reader.result }),
+    });
+    const r = await res.json();
+    if (r.ok) { toast('CV naložen ✓'); loadState(); }
+    else toast(r.error || 'Nalaganje ni uspelo.');
+  };
+  reader.readAsDataURL(file);
+}
+
+// --- wire up ---
+$('drop').addEventListener('click', () => $('cv').click());
+$('cv').addEventListener('change', (e) => handleCv(e.target.files[0]));
+['dragover', 'dragenter'].forEach((ev) =>
+  $('drop').addEventListener(ev, (e) => { e.preventDefault(); $('drop').classList.add('hot'); }));
+['dragleave', 'drop'].forEach((ev) =>
+  $('drop').addEventListener(ev, (e) => { e.preventDefault(); $('drop').classList.remove('hot'); }));
+$('drop').addEventListener('drop', (e) => handleCv(e.dataTransfer.files[0]));
+
+$('save').addEventListener('click', () => saveSettings(false));
+$('output_mode').addEventListener('change', () => {
+  $('mode-label').textContent = ($('output_mode').value === 'csv') ? 'shranjevanje v jobs.csv' : 'shranjevanje: ' + $('output_mode').value;
+});
+
+$('run-test').addEventListener('click', () => startRun('test'));
+$('run-selftest').addEventListener('click', () => startRun('selftest'));
+$('run-live').addEventListener('click', () => {
+  if (confirm('PRAVI ZAGON bo dejansko oddal prijave in poslal e-pošto. Nadaljujem?')) startRun('live');
+});
+$('stop').addEventListener('click', async () => {
+  await fetch('/api/stop', { method: 'POST' });
+});
+
+// --- live events ---
+const es = new EventSource('/api/events');
+es.addEventListener('log', (ev) => appendLog(JSON.parse(ev.data)));
+es.addEventListener('status', (ev) => {
+  const d = JSON.parse(ev.data);
+  setRunning(Boolean(d.running));
+  if (d.running === false && d.code === 0) loadState();
+});
+es.addEventListener('summary', (ev) => {
+  const d = JSON.parse(ev.data);
+  if (d) renderSummary(d);
+});
+
+loadState();
+</script>
+</body>
+</html>

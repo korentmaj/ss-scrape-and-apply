@@ -16,6 +16,25 @@ running against the current site.
 
 All of the "CS" gigs that I have gotten in the past year were done through this tool.
 
+## Easy mode: one-click GUI (Windows)
+
+If you just want to use it without touching a terminal, there is a small graphical
+control panel. It is meant to be plug-and-play for someone who is not technical:
+
+1. Double-click **`1-Namesti.bat`** and click "Yes" / "Run anyway" on the prompts.
+   It installs Node.js (if missing), the dependencies and the browser automatically.
+2. Double-click **`2-Zazeni.bat`** (or the "Studentski servis - Prijave" desktop
+   icon). A page opens in your browser at `http://127.0.0.1:8731`.
+3. In the page: upload your CV, optionally edit the message, click **Testni zagon**
+   (safe test). Log in to Studentski servis when the browser window opens (only the
+   first time). When you are happy, click **Pravi zagon** to actually apply.
+
+Slovenian step-by-step instructions for a non-technical user are in
+[`NAVODILA.md`](NAVODILA.md), with a short pointer in `ZACNI-TUKAJ.txt`. The GUI
+defaults to local CSV output, so no Notion or Gmail setup is needed to get going.
+
+You can also start the GUI from a terminal with `npm run gui`.
+
 A small scraper / auto-apply tool for
 [studentski-servis.com](https://www.studentski-servis.com), the Slovenian student-work
 portal. It opens the job listing, looks at the top few newest ads, and for each new one

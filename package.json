@@ -4,6 +4,7 @@
   "description": "Skripta pregleda prvih N oglasov (najnovejši na vrhu), obdeluje samo nove `job_id` in zapisuje rezultat v Notion / `jobs.csv`.",
   "main": "scraper.js",
   "scripts": {
+    "gui": "node gui-server.js",
     "start": "node scraper.js",
     "real-submit": "node scraper.js --real-submit",
     "chrome": "node scraper.js --chrome-profile",

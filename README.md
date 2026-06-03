@@ -6,6 +6,8 @@ anymore, so I figured I'd just put it up here. I can't promise how well it still
 If you download it, you'll probably need to adjust and update a few things to get it
 running against the current site.
 
+All of the "CS" gigs that I have gotten in the past year were done through this tool.
+
 A small scraper / auto-apply tool for
 [studentski-servis.com](https://www.studentski-servis.com), the Slovenian student-work
 portal. It opens the job listing, looks at the top few newest ads, and for each new one

@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+__pycache__/
+
+# browser profiles (contain login sessions)
+.playwright-profile/
+.chrome-automation-profile/
+
+# secrets and local config
+.env
+config.txt
+
+# CV / personal attachments
+cv.pdf
+*.pdf
+
+# runtime state and output
+jobs.csv
+seen_jobs.json
+mailer_state.json
+mailer_logs.jsonl
+app.log
+error.log
+logs/
+*.tmp

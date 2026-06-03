@@ -1,0 +1,13 @@
+# Normalize line endings in the repo, check out native on each platform.
+* text=auto
+
+# Shell scripts must stay LF so they run on Linux/macOS.
+*.sh text eol=lf
+
+# Windows scripts prefer CRLF.
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary assets.
+*.png binary
+*.pdf binary

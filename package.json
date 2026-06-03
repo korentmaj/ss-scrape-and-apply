@@ -1,0 +1,32 @@
+{
+  "name": "ss-scrape-and-apply",
+  "version": "1.0.0",
+  "description": "Skripta pregleda prvih N oglasov (najnovejši na vrhu), obdeluje samo nove `job_id` in zapisuje rezultat v Notion / `jobs.csv`.",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js",
+    "real-submit": "node scraper.js --real-submit",
+    "chrome": "node scraper.js --chrome-profile",
+    "chrome-real": "node scraper.js --chrome-profile --real-submit",
+    "chrome-verbose": "node scraper.js --chrome-profile --verbose",
+    "chrome-real-verbose": "node scraper.js --chrome-profile --real-submit --verbose",
+    "self-test": "node scraper.js --self-test",
+    "mailer-example": "node mailer_example.js",
+    "win:setup": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_scraper.ps1 -Mode setup",
+    "win:test": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_scraper.ps1 -Mode self-test",
+    "win:chrome": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_scraper.ps1 -Mode chrome-verbose",
+    "win:live": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\run_scraper.ps1 -Mode chrome-real-verbose",
+    "nix:setup": "bash run_scraper.sh setup",
+    "nix:test": "bash run_scraper.sh self-test",
+    "nix:chrome": "bash run_scraper.sh chrome-verbose",
+    "nix:live": "bash run_scraper.sh chrome-real-verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "type": "commonjs",
+  "dependencies": {
+    "nodemailer": "^8.0.1",
+    "playwright": "^1.58.2"
+  }
+}

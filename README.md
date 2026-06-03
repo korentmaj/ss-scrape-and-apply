@@ -1,9 +1,12 @@
 # ss-scrape-and-apply
 
-**Disclaimer:** Use this at your own risk. Automating logins and job applications very
-likely goes against the Studentski servis terms of use, and it could get your account
-flagged, suspended or banned. I take no responsibility for how you use it or for whatever
-happens to your account. It is just an old personal project, shared as is.
+### Disclaimer
+
+> [!CAUTION]
+> Use this at your own risk. Automating logins and job applications very likely goes
+> against the Studentski servis terms of use, and it could get your account flagged,
+> suspended or banned. I take no responsibility for how you use it or for whatever
+> happens to your account. It is just an old personal project, shared as is.
 
 I built this about a year ago and used it for a while to apply for student jobs through
 Studentski servis. I haven't used it in a long time now since I don't really need it

@@ -1,5 +1,11 @@
 # ss-scrape-and-apply
 
+I built this about a year ago and used it for a while to apply for student jobs through
+Studentski servis. I haven't used it in a long time now since I don't really need it
+anymore, so I figured I'd just put it up here. I can't promise how well it still works.
+If you download it, you'll probably need to adjust and update a few things to get it
+running against the current site.
+
 A small scraper / auto-apply tool for
 [studentski-servis.com](https://www.studentski-servis.com), the Slovenian student-work
 portal. It opens the job listing, looks at the top few newest ads, and for each new one
@@ -7,8 +13,8 @@ either grabs the contact email or fills in the web application form. Results are
 to a Notion database and/or a local CSV.
 
 It uses a real Chrome profile through Playwright, so you log in once and the session
-is reused on later runs. This is a hobby/showcase project, not a polished product —
-selectors are tied to the current site layout and may break if the site changes.
+is reused on later runs. This is a hobby/showcase project, not a polished product.
+The selectors are tied to the current site layout and may break if the site changes.
 
 ## Requirements
 
@@ -55,9 +61,9 @@ There is a helper script for each platform:
 
 Two files drive the behaviour:
 
-- **`.env`** — secrets and switches. Copy it from `.env.example` and fill in your
-  Notion token and/or Gmail SMTP credentials. `.env` is git-ignored, keep it that way.
-- **`config.json`** — the scraper settings: the target URL, how many ads to check
+- **`.env`** holds your secrets and switches. Copy it from `.env.example` and fill in
+  your Notion token and/or Gmail SMTP credentials. `.env` is git-ignored, keep it that way.
+- **`config.json`** holds the scraper settings: the target URL, how many ads to check
   (`top_n`), the application message, the attachment file name, etc.
 
 Put your CV in the project root as **`cv.pdf`** (or change `attachment_file` /
@@ -78,7 +84,7 @@ database id into `.env`.
 
 For email, enable 2-Step Verification on your Google account, generate a Gmail App
 Password, and set the `SMTP_*` / `MAIL_*` values in `.env`. Keep `MAIL_DRY_RUN=true`
-until you have tested it — in dry-run mode emails are logged but not actually sent.
+until you have tested it. In dry-run mode emails are logged but not actually sent.
 
 ## First run
 
@@ -123,10 +129,10 @@ row to verify the connection.
 
 All of these are git-ignored:
 
-- `logs/` — per-run event logs and screenshots
-- `app.log`, `error.log` — general and error logs
-- `jobs.csv`, `seen_jobs.json` — output and dedupe state
-- `mailer_state.json`, `mailer_logs.jsonl` — mailer daily-cap and attempt logs
+- `logs/`: per-run event logs and screenshots
+- `app.log`, `error.log`: general and error logs
+- `jobs.csv`, `seen_jobs.json`: output and dedupe state
+- `mailer_state.json`, `mailer_logs.jsonl`: mailer daily-cap and attempt logs
 
 ## Note
 
@@ -135,4 +141,4 @@ All of these are git-ignored:
 
 ## License
 
-GPL-3.0 — see [LICENSE](LICENSE).
+GPL-3.0. See [LICENSE](LICENSE).
